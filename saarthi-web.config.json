@@ -1,0 +1,23 @@
+{
+  "name": "saarthi",
+  "version": "1.0.0",
+  "description": "Saarthi - Project Management Desktop Application",
+  "author": "Yash Borude",
+  "platforms": ["windows", "macos", "linux"],
+  "architectures": ["x64"],
+  "frontend": {
+    "deployedUrl": "http://localhost:3000"
+  },
+  "desktop": {
+    "main": "electron/main.js",
+    "preload": "electron/preload.js",
+    "width": 1400,
+    "height": 900
+  },
+  "build": {
+    "outputDir": "./dist",
+    "keepTemp": false,
+    "compression": "normal"
+  },
+  "channel": "stable"
+}

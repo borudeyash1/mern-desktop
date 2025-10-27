@@ -1,0 +1,26 @@
+{
+  "name": "my-mern-app",
+  "version": "1.0.0",
+  "description": "My MERN Desktop Application",
+  "author": "Your Name",
+  "platforms": ["windows", "macos", "linux"],
+  "architectures": ["x64"],
+  "frontend": {
+    "dir": "./client",
+    "buildCommand": "npm run build",
+    "outputDir": "./build"
+  },
+  "desktop": {
+    "main": "electron/main.js",
+    "preload": "electron/preload.js",
+    "icon": "./assets/icon.png",
+    "width": 1200,
+    "height": 800
+  },
+  "build": {
+    "outputDir": "./dist",
+    "keepTemp": false,
+    "compression": "normal"
+  },
+  "channel": "stable"
+}

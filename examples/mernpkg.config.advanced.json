@@ -1,0 +1,40 @@
+{
+  "name": "my-mern-app",
+  "version": "1.0.0",
+  "description": "My MERN Desktop Application with Advanced Features",
+  "author": "Your Name",
+  "platforms": ["windows", "macos", "linux"],
+  "architectures": ["x64", "arm64"],
+  "frontend": {
+    "deployedUrl": "https://myapp.com"
+  },
+  "desktop": {
+    "main": "electron/main.js",
+    "preload": "electron/preload.js",
+    "icon": "./assets/icon.png",
+    "width": 1400,
+    "height": 900
+  },
+  "build": {
+    "outputDir": "./dist",
+    "keepTemp": false,
+    "compression": "maximum"
+  },
+  "signing": {
+    "windows": {
+      "certificateFile": "./certs/windows-cert.pfx",
+      "certificatePassword": "${WINDOWS_CERT_PASSWORD}"
+    },
+    "macos": {
+      "identity": "Developer ID Application: My Company (ABCDE12345)",
+      "teamId": "ABCDE12345",
+      "notarize": true
+    }
+  },
+  "upload": {
+    "enabled": true,
+    "url": "http://localhost:3000/admin/releases",
+    "authToken": "${RELEASE_AUTH_TOKEN}"
+  },
+  "channel": "stable"
+}
