@@ -1,8 +1,14 @@
-# mernpkg
+# mern-desktop
 
-**Standalone offline packager and desktop client generator for MERN web apps**
+[![CI](https://github.com/borudeyash1/mern-desktop/actions/workflows/ci.yml/badge.svg)](https://github.com/borudeyash1/mern-desktop/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org)
+[![GitHub issues](https://img.shields.io/github/issues/borudeyash1/mern-desktop)](https://github.com/borudeyash1/mern-desktop/issues)
+[![GitHub stars](https://img.shields.io/github/stars/borudeyash1/mern-desktop)](https://github.com/borudeyash1/mern-desktop/stargazers)
 
-Convert your MERN web application into signed, installable desktop applications for Windows, macOS, and Linux with a single command.
+**Convert any MERN web application into professional desktop apps for Windows, macOS, and Linux**
+
+Transform your MERN stack web applications into native desktop applications with a single command. Create professional installers or portable packages with zero configuration.
 
 ## Features
 

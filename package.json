@@ -1,17 +1,19 @@
 {
-  "name": "mernpkg",
-  "version": "0.1.0",
-  "description": "Standalone offline packager and desktop client generator for MERN web apps",
+  "name": "mern-desktop",
+  "version": "1.0.0",
+  "description": "Convert any MERN web application into professional desktop apps for Windows, macOS, and Linux",
   "main": "src/index.js",
   "type": "module",
   "bin": {
     "mernpkg": "./bin/mernpkg.js"
   },
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test": "jest",
     "test:watch": "npm test -- --watch",
     "dev": "node bin/mernpkg.js",
-    "lint": "eslint src/**/*.js"
+    "lint": "eslint src/**/*.js bin/**/*.js",
+    "lint:fix": "eslint src/**/*.js bin/**/*.js --fix",
+    "prepare": "npm test"
   },
   "keywords": [
     "mern",
@@ -22,8 +24,16 @@
     "installer",
     "cross-platform"
   ],
-  "author": "",
+  "author": "Yash Borude <borudeyash1@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/borudeyash1/mern-desktop.git"
+  },
+  "bugs": {
+    "url": "https://github.com/borudeyash1/mern-desktop/issues"
+  },
+  "homepage": "https://github.com/borudeyash1/mern-desktop#readme",
   "engines": {
     "node": ">=18.0.0"
   },
