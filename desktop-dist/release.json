@@ -1,0 +1,17 @@
+{
+  "name": "eco-vision",
+  "version": "1.0.0",
+  "channel": "stable",
+  "releaseDate": "2025-10-27T13:59:28.310Z",
+  "artifacts": [
+    {
+      "name": "eco-vision-1.0.0-win-x64-portable.zip",
+      "platform": "windows",
+      "arch": "x64",
+      "format": "portable",
+      "path": "desktop-dist\\eco-vision-1.0.0-win-x64-portable.zip",
+      "size": 2738,
+      "checksum": "57a386a13613b0dce20332ec15318c5c9f2c51aaf933eeee665ec8cf7ecff5ce"
+    }
+  ]
+}
