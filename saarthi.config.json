@@ -6,9 +6,7 @@
   "platforms": ["windows", "macos", "linux"],
   "architectures": ["x64"],
   "frontend": {
-    "dir": "../Project Management/client",
-    "buildCommand": "npm run build",
-    "outputDir": "./build"
+    "deployedUrl": "http://localhost:3000"
   },
   "desktop": {
     "main": "electron/main.js",

@@ -1,11 +1,11 @@
 ; Saarthi Desktop App - Professional Installer Script
 ; Created with Inno Setup
 
-#define MyAppName "Saarthi"
+#define MyAppName "Sartthi"
 #define MyAppVersion "1.0.0"
 #define MyAppPublisher "Yash Borude"
 #define MyAppURL "https://github.com/borudeyash1"
-#define MyAppExeName "Saarthi.exe"
+#define MyAppExeName "Sartthi.vbs"
 
 [Setup]
 ; App Information
@@ -24,7 +24,7 @@ DisableProgramGroupPage=yes
 
 ; Output
 OutputDir=dist
-OutputBaseFilename=Saarthi-Setup-{#MyAppVersion}
+OutputBaseFilename=Sartthi-Setup-{#MyAppVersion}-FIXED
 Compression=lzma
 SolidCompression=yes
 
@@ -36,14 +36,13 @@ PrivilegesRequiredOverridesAllowed=dialog
 WizardStyle=modern
 
 ; Uninstall
-UninstallDisplayIcon={app}\{#MyAppExeName}
+UninstallDisplayIcon={app}\logo_only.ico
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: checked
-Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 6.1; Check: not IsAdminInstallMode
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
 
 [Files]
 ; Copy all app files
@@ -51,26 +50,23 @@ Source: "dist\saarthi-app\*"; DestDir: "{app}"; Flags: ignoreversion recursesubd
 
 [Icons]
 ; Start Menu
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{group}\{#MyAppName}"; Filename: "wscript.exe"; Parameters: """{app}\{#MyAppExeName}"""; WorkingDir: "{app}"; IconFilename: "{app}\logo_only.ico"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 
 ; Desktop
-Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
-
-; Quick Launch
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon
+Name: "{autodesktop}\{#MyAppName}"; Filename: "wscript.exe"; Parameters: """{app}\{#MyAppExeName}"""; WorkingDir: "{app}"; IconFilename: "{app}\logo_only.ico"; Tasks: desktopicon
 
 [Run]
 ; Launch app after installation
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "wscript.exe"; Parameters: """{app}\{#MyAppExeName}"""; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
 [Code]
 // Custom installation messages
 procedure InitializeWizard();
 begin
   WizardForm.WelcomeLabel2.Caption := 
-    'This will install Saarthi Project Management Desktop Application on your computer.' + #13#10 + #13#10 +
-    'Saarthi helps you manage projects, tasks, and teams efficiently.' + #13#10 + #13#10 +
+    'This will install Sartthi Project Management Desktop Application on your computer.' + #13#10 + #13#10 +
+    'Sartthi helps you manage projects, tasks, and teams efficiently.' + #13#10 + #13#10 +
     'Click Next to continue, or Cancel to exit Setup.';
 end;
 
