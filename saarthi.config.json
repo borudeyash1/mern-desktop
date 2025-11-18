@@ -6,7 +6,7 @@
   "platforms": ["windows", "macos", "linux"],
   "architectures": ["x64"],
   "frontend": {
-    "deployedUrl": "http://localhost:3000"
+    "deployedUrl": "https://sartthi.com"
   },
   "desktop": {
     "main": "electron/main.js",
