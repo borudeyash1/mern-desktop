@@ -4,7 +4,7 @@ echo   Creating Final Saarthi Package
 echo ========================================
 echo.
 
-cd "D:\YASH\MERN DESKTOP"
+cd "C:\Users\student\Downloads\mern-desktop"
 
 REM Step 1: Build the app
 echo [*] Building Saarthi desktop app...
@@ -96,7 +96,7 @@ echo   Package Created!
 echo ========================================
 echo.
 echo File: Saarthi-Desktop-Installer-v1.0.0.zip
-echo Location: D:\YASH\MERN DESKTOP\dist
+echo Location: C:\Users\student\Downloads\mern-desktop\dist
 echo.
 dir "Saarthi-Desktop-Installer-v1.0.0.zip"
 echo.

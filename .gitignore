@@ -4,8 +4,11 @@ package-lock.json
 yarn.lock
 
 # Build outputs
-dist/
+# dist/
 .mernpkg-temp/
+
+Project/
+
 
 # Environment
 .env

@@ -1,0 +1,9 @@
+{
+  "name": "saarthi",
+  "version": "1.0.0",
+  "description": "Saarthi - Project Management Desktop Application",
+  "main": "main.js",
+  "author": "Yash Borude",
+  "license": "MIT",
+  "dependencies": {}
+}

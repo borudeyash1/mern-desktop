@@ -1,8 +1,8 @@
 # PowerShell script to convert JPG to ICO
 Add-Type -AssemblyName System.Drawing
 
-$sourcePath = "D:\YASH\Project Management\client\src\images\logo_only.jpg"
-$targetPath = "D:\YASH\MERN DESKTOP\logo_only.ico"
+$sourcePath = "C:\Users\student\Downloads\mern-desktop\3.svg"
+$targetPath = "C:\Users\student\Downloads\mern-desktop\logo_only.ico"
 
 # Load the image
 $img = [System.Drawing.Image]::FromFile($sourcePath)

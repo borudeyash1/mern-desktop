@@ -4,7 +4,7 @@ echo   Creating Sartthi .exe Installer
 echo ========================================
 echo.
 
-cd /d "D:\YASH\MERN DESKTOP"
+cd /d "C:\Users\student\Downloads\mern-desktop"
 
 REM Step 1: Check for Inno Setup
 echo [*] Checking for Inno Setup...
@@ -101,7 +101,7 @@ if %ERRORLEVEL% EQU 0 (
     echo ========================================
     echo.
     echo File: Sartthi-Setup-1.0.0.exe
-    echo Location: D:\YASH\MERN DESKTOP\dist
+    echo Location: C:\Users\student\Downloads\mern-desktop\dist
     echo.
     dir "dist\Sartthi-Setup-*.exe"
     echo.

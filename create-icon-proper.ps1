@@ -1,8 +1,8 @@
 # PowerShell script to convert JPG to proper ICO with multiple sizes
 Add-Type -AssemblyName System.Drawing
 
-$sourcePath = "D:\YASH\Project Management\client\src\images\logo_only.jpg"
-$targetPath = "D:\YASH\MERN DESKTOP\logo_only.ico"
+$sourcePath = "C:\Users\student\Downloads\mern-desktop\3.svg"
+$targetPath = "C:\Users\student\Downloads\mern-desktop\logo_only.ico"
 
 Write-Host "Loading image from: $sourcePath"
 

@@ -1,0 +1,17 @@
+{
+  "name": "saarthi",
+  "version": "1.0.0",
+  "channel": "stable",
+  "releaseDate": "2025-11-20T11:51:14.313Z",
+  "artifacts": [
+    {
+      "name": "saarthi-1.0.0-win-x64-portable.zip",
+      "platform": "windows",
+      "arch": "x64",
+      "format": "portable",
+      "path": "dist\\saarthi-1.0.0-win-x64-portable.zip",
+      "size": 5563,
+      "checksum": "7a03e5c4b5eb93e494b5c71ccaef6844888ec86b73169a48093c059a282e2cac"
+    }
+  ]
+}

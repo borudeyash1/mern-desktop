@@ -8,6 +8,11 @@
   "frontend": {
     "deployedUrl": "https://sartthi.com"
   },
+  "apiBase": "https://sartthi.com/api",
+  "apiFallbacks": [
+    "https://api.sartthi.com/api",
+    "http://localhost:5000/api"
+  ],
   "desktop": {
     "main": "electron/main.js",
     "preload": "electron/preload.js",

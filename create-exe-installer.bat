@@ -5,44 +5,70 @@ echo   (Professional Windows Installer)
 echo ========================================
 echo.
 
-cd "D:\YASH\MERN DESKTOP"
+cd "C:\Users\student\Downloads\mern-desktop"
+
+set "PROJECT_DIR=C:\Users\student\Downloads\mern-desktop\Project\Project-Management"
+set "PROJECT_DIST=C:\Users\student\Downloads\mern-desktop\dist"
+set "PORTABLE_ZIP=%PROJECT_DIST%\saarthi-1.0.0-win-x64-portable.zip"
 
 REM Step 1: Check if Inno Setup is installed
 echo [*] Checking for Inno Setup...
+set "INNO_PATH="
+
 if exist "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" (
-    set INNO_PATH=C:\Program Files (x86)\Inno Setup 6\ISCC.exe
-    echo [OK] Inno Setup found!
-) else if exist "C:\Program Files\Inno Setup 6\ISCC.exe" (
-    set INNO_PATH=C:\Program Files\Inno Setup 6\ISCC.exe
-    echo [OK] Inno Setup found!
-) else (
-    echo [ERROR] Inno Setup not found!
-    echo.
-    echo Please install Inno Setup first:
-    echo 1. Download from: https://jrsoftware.org/isdl.php
-    echo 2. Install it (takes 30 seconds)
-    echo 3. Run this script again
-    echo.
-    pause
-    exit /b 1
+    set "INNO_PATH=C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
 )
+
+if not defined INNO_PATH (
+    if exist "C:\Program Files\Inno Setup 6\ISCC.exe" (
+        set "INNO_PATH=C:\Program Files\Inno Setup 6\ISCC.exe"
+    )
+)
+
+if defined INNO_PATH goto have_inno
+
+echo [ERROR] Inno Setup not found!
+echo.
+echo Please install Inno Setup first:
+echo 1. Download from: https://jrsoftware.org/isdl.php
+echo 2. Install it (takes 30 seconds)
+echo 3. Run this script again
+echo.
+pause
+exit /b 1
+
+:have_inno
+echo [OK] Inno Setup found!
 
 REM Step 2: Build the portable app
 echo.
 echo [*] Building Saarthi desktop app...
-node bin\mernpkg.js build --config saarthi.config.json --platforms windows --arch x64
+pushd "%PROJECT_DIR%"
+node "C:\Users\student\Downloads\mern-desktop\bin\mernpkg.js" build --config "C:\Users\student\Downloads\mern-desktop\saarthi.config.json" --platforms windows --arch x64 --ci-mode
+popd
+
+if not exist "%PORTABLE_ZIP%" (
+    echo [ERROR] Portable build not found at: %PORTABLE_ZIP%
+    echo        Make sure the build completed successfully.
+    pause
+    exit /b 1
+)
 
 REM Step 3: Prepare app folder for installer
 echo.
 echo [*] Preparing app files for installer...
 if exist "dist\saarthi-app" rd /s /q "dist\saarthi-app"
+if exist "dist\saarthi-app-temp" rd /s /q "dist\saarthi-app-temp"
 mkdir "dist\saarthi-app"
 
 REM Extract portable ZIP
-powershell -Command "Expand-Archive -Path 'dist\saarthi-1.0.0-win-x64-portable.zip' -DestinationPath 'dist\saarthi-app-temp' -Force"
+powershell -Command "Expand-Archive -Path '%PORTABLE_ZIP%' -DestinationPath 'dist\saarthi-app-temp' -Force"
 
 REM Copy app files
 xcopy /E /I /Y "dist\saarthi-app-temp\saarthi\*" "dist\saarthi-app\"
+
+REM Include application icon
+if exist "logo_only.ico" copy /Y "logo_only.ico" "dist\saarthi-app\logo_only.ico" >nul
 
 REM Create launcher executable wrapper
 echo.
@@ -143,7 +169,7 @@ if %ERRORLEVEL% EQU 0 (
     echo ========================================
     echo.
     echo File: Saarthi-Setup-1.0.0.exe
-    echo Location: D:\YASH\MERN DESKTOP\dist
+    echo Location: C:\Users\student\Downloads\mern-desktop\dist
     echo.
     echo This is a professional Windows installer!
     echo.

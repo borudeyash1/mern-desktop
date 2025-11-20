@@ -5,7 +5,7 @@
 #define MyAppVersion "1.0.0"
 #define MyAppPublisher "Yash Borude"
 #define MyAppURL "https://github.com/borudeyash1"
-#define MyAppExeName "Sartthi.vbs"
+#define MyAppExeName "Saarthi.vbs"
 
 [Setup]
 ; App Information
