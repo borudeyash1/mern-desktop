@@ -1,15 +1,8 @@
 ========================================
   Saarthi Desktop App - Installation
 ========================================
+run the following scripts in the root directory-
 
-INSTALLATION:
-1. Double-click "Install-Saarthi.bat"
-2. Wait 1-2 minutes
-3. Launch from Desktop or Start Menu
+node .\bin\mernpkg.js build --config .\saarthi.config.json --platforms windows --arch x64 --ci-mode  
 
-REQUIREMENTS:
-- Windows 10/11
-- Internet connection
-- Node.js (will use if installed)
-
-SUPPORT: borudeyash1@gmail.com
+.\create-exe-installer.bat

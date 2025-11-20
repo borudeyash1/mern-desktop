@@ -3,7 +3,10 @@ param(
     [string]$Environment = 'prod'
 )
 
-$repoRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
+# Get the repository root (parent of scripts directory)
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$repoRoot = Split-Path -Parent $scriptDir
+
 $clientEnvPath = Join-Path $repoRoot 'Project\Project-Management\client\.env'
 $serverEnvPath = Join-Path $repoRoot 'Project\Project-Management\server\.env'
 $configPath = Join-Path $repoRoot 'saarthi.config.json'
