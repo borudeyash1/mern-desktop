@@ -1,15 +1,33 @@
 @echo off
+setlocal enabledelayedexpansion
 echo ========================================
-echo   Creating Saarthi .exe Installer
+echo   Creating desktop .exe installer
 echo   (Professional Windows Installer)
 echo ========================================
 echo.
 
-cd "C:\Users\student\Downloads\mern-desktop"
+set "ROOT_DIR=%~dp0"
+pushd "%ROOT_DIR%"
 
-set "PROJECT_DIR=C:\Users\student\Downloads\mern-desktop\Project\Project-Management"
-set "PROJECT_DIST=C:\Users\student\Downloads\mern-desktop\dist"
-set "PORTABLE_ZIP=%PROJECT_DIST%\saarthi-1.0.0-win-x64-portable.zip"
+REM Read metadata from saarthi.config.json
+for /f "usebackq tokens=1,* delims==" %%A in (`node -e "const fs=require('fs'); const cfg=JSON.parse(fs.readFileSync('saarthi.config.json','utf8')); if(!cfg.name || !cfg.version){console.error('Config must include name and version'); process.exit(1);} const get=v=>(v ?? '').toString(); console.log('APP_NAME='+get(cfg.name)); console.log('APP_VERSION='+get(cfg.version)); console.log('APP_AUTHOR='+get(cfg.author || cfg.name)); const frontend=(cfg.frontend||{}); console.log('APP_URL='+get(frontend.deployedUrl || '')); console.log('APP_PROJECT_DIR='+get(frontend.dir || 'Project/Project-Management'));"`) do set "%%A=%%B"
+
+if not defined APP_NAME (
+    echo [ERROR] Could not load APP_NAME from saarthi.config.json
+    exit /b 1
+)
+
+if not defined APP_VERSION (
+    echo [ERROR] Could not load APP_VERSION from saarthi.config.json
+    exit /b 1
+)
+
+set "APP_SAFE_NAME=%APP_NAME: =%"
+set "PROJECT_DIR=%ROOT_DIR%%APP_PROJECT_DIR:/=\%"
+set "PROJECT_DIST=%ROOT_DIR%dist"
+set "PORTABLE_ZIP=%PROJECT_DIST%\%APP_NAME%-%APP_VERSION%-win-x64-portable.zip"
+set "APP_STAGING_DIR=%PROJECT_DIST%\%APP_NAME%-app"
+set "APP_TEMP_DIR=%PROJECT_DIST%\%APP_NAME%-app-temp"
 
 REM Step 1: Check if Inno Setup is installed
 echo [*] Checking for Inno Setup...
@@ -42,9 +60,9 @@ echo [OK] Inno Setup found!
 
 REM Step 2: Build the portable app
 echo.
-echo [*] Building Saarthi desktop app...
+echo [*] Building %APP_NAME% desktop app...
 pushd "%PROJECT_DIR%"
-node "C:\Users\student\Downloads\mern-desktop\bin\mernpkg.js" build --config "C:\Users\student\Downloads\mern-desktop\saarthi.config.json" --platforms windows --arch x64 --ci-mode
+node "%ROOT_DIR%bin\mernpkg.js" build --config "%ROOT_DIR%saarthi.config.json" --platforms windows --arch x64 --ci-mode
 popd
 
 if not exist "%PORTABLE_ZIP%" (
@@ -57,25 +75,25 @@ if not exist "%PORTABLE_ZIP%" (
 REM Step 3: Prepare app folder for installer
 echo.
 echo [*] Preparing app files for installer...
-if exist "dist\saarthi-app" rd /s /q "dist\saarthi-app"
-if exist "dist\saarthi-app-temp" rd /s /q "dist\saarthi-app-temp"
-mkdir "dist\saarthi-app"
+if exist "%APP_STAGING_DIR%" rd /s /q "%APP_STAGING_DIR%"
+if exist "%APP_TEMP_DIR%" rd /s /q "%APP_TEMP_DIR%"
+mkdir "%APP_STAGING_DIR%"
 
 REM Extract portable ZIP
-powershell -Command "Expand-Archive -Path '%PORTABLE_ZIP%' -DestinationPath 'dist\saarthi-app-temp' -Force"
+powershell -Command "Expand-Archive -Path '%PORTABLE_ZIP%' -DestinationPath '%APP_TEMP_DIR%' -Force"
 
 REM Copy app files
-xcopy /E /I /Y "dist\saarthi-app-temp\saarthi\*" "dist\saarthi-app\"
+xcopy /E /I /Y "%APP_TEMP_DIR%\%APP_NAME%\*" "%APP_STAGING_DIR%\"
 
 REM Include application icon
-if exist "logo_only.ico" copy /Y "logo_only.ico" "dist\saarthi-app\logo_only.ico" >nul
+if exist "logo_only.ico" copy /Y "logo_only.ico" "%APP_STAGING_DIR%\logo_only.ico" >nul
 
 REM Create launcher executable wrapper
 echo.
 echo [*] Creating launcher executable...
 
 REM Create a Node.js launcher script
-> "dist\saarthi-app\launch.js" (
+> "%APP_STAGING_DIR%\launch.js" (
 echo const { spawn } = require('child_process'^);
 echo const path = require('path'^);
 echo.
@@ -92,7 +110,7 @@ echo child.unref(^);
 )
 
 REM Create batch launcher
-> "dist\saarthi-app\Saarthi.bat" (
+> "%APP_STAGING_DIR%\%APP_SAFE_NAME%.bat" (
 echo @echo off
 echo cd "%%~dp0"
 echo if not exist "node_modules\electron" ^(
@@ -103,9 +121,9 @@ echo start "" "%%~dp0node_modules\.bin\electron.cmd" .
 )
 
 REM Create VBS launcher to hide console
-> "dist\saarthi-app\Saarthi.vbs" (
+> "%APP_STAGING_DIR%\%APP_SAFE_NAME%.vbs" (
 echo Set WshShell = CreateObject("WScript.Shell"^)
-echo WshShell.Run chr(34^) ^& WScript.ScriptFullName ^& "\..\Saarthi.bat" ^& Chr(34^), 0
+echo WshShell.Run chr(34^) ^& WScript.ScriptFullName ^& "\..\%APP_SAFE_NAME%.bat" ^& Chr(34^), 0
 echo Set WshShell = Nothing
 )
 
@@ -113,7 +131,7 @@ REM Create final EXE launcher using IExpress (built into Windows)
 echo.
 echo [*] Creating Saarthi.exe launcher...
 
-> "dist\saarthi-app\launcher.sed" (
+> "%APP_STAGING_DIR%\launcher.sed" (
 echo [Version]
 echo Class=IEXPRESS
 echo SEDVersion=3
@@ -129,9 +147,9 @@ echo RebootMode=N
 echo InstallPrompt=
 echo DisplayLicense=
 echo FinishMessage=
-echo TargetName=%%TEMP%%\Saarthi.exe
-echo FriendlyName=Saarthi
-echo AppLaunched=cmd /c Saarthi.bat
+echo TargetName=%%TEMP%%\%APP_SAFE_NAME%.exe
+echo FriendlyName=%APP_NAME%
+echo AppLaunched=cmd /c %APP_SAFE_NAME%.bat
 echo PostInstallCmd=^<None^>
 echo AdminQuietInstCmd=
 echo UserQuietInstCmd=
@@ -157,10 +175,10 @@ if not exist "saarthi-icon.ico" (
 REM Step 5: Build the installer with Inno Setup
 echo.
 echo [*] Building professional .exe installer...
-echo     This creates: Saarthi-Setup-1.0.0.exe
+echo     This creates: %APP_NAME%-Setup-%APP_VERSION%.exe
 echo.
 
-"%INNO_PATH%" "saarthi-installer.iss"
+"%INNO_PATH%" "/dMyAppName=%APP_NAME%" "/dMyAppVersion=%APP_VERSION%" "/dMyAppPublisher=%APP_AUTHOR%" "/dMyAppURL=%APP_URL%" "/dMyAppExeName=%APP_SAFE_NAME%.vbs" "saarthi-installer.iss"
 
 if %ERRORLEVEL% EQU 0 (
     echo.
@@ -168,13 +186,13 @@ if %ERRORLEVEL% EQU 0 (
     echo   SUCCESS! .exe Installer Created!
     echo ========================================
     echo.
-    echo File: Saarthi-Setup-1.0.0.exe
-    echo Location: C:\Users\student\Downloads\mern-desktop\dist
+    echo File: %APP_NAME%-Setup-%APP_VERSION%.exe
+    echo Location: %PROJECT_DIST%
     echo.
     echo This is a professional Windows installer!
     echo.
     echo Users can:
-    echo   1. Download Saarthi-Setup-1.0.0.exe
+    echo   1. Download %APP_NAME%-Setup-%APP_VERSION%.exe
     echo   2. Double-click it
     echo   3. Click "Next, Next, Install"
     echo   4. App installs to Program Files
@@ -183,11 +201,14 @@ if %ERRORLEVEL% EQU 0 (
     echo.
     echo Just like Microsoft apps! 
     echo.
-    dir "dist\Saarthi-Setup-*.exe"
+    dir "%PROJECT_DIST%\%APP_NAME%-Setup-*.exe"
 ) else (
     echo.
     echo [ERROR] Installer build failed!
     echo Check the error messages above.
+
+popd
+endlocal
 )
 
 echo.

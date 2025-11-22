@@ -85,6 +85,10 @@ const configSchema = {
   }
 };
 
+function stripBom(content) {
+  return content.replace(/^\uFEFF/, '');
+}
+
 /**
  * Load and validate configuration
  * @param {string} configPath - Path to config file
@@ -101,8 +105,12 @@ export async function loadConfig(configPath, overrides = {}) {
       const content = readFileSync(configPath, 'utf-8');
       config = yamlLoad(content);
     } else {
-      const content = readFileSync(configPath, 'utf-8');
-      config = JSON.parse(content);
+      const content = stripBom(readFileSync(configPath, 'utf-8'));
+      try {
+        config = JSON.parse(content);
+      } catch (parseError) {
+        throw new Error(`Failed to parse JSON config (${configPath}): ${parseError.message}`);
+      }
     }
     
     // Apply CLI overrides

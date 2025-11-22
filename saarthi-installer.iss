@@ -1,11 +1,25 @@
 ; Saarthi Desktop App - Professional Installer Script
 ; Created with Inno Setup
 
-#define MyAppName "Sartthi"
-#define MyAppVersion "1.0.0"
-#define MyAppPublisher "Yash Borude"
-#define MyAppURL "https://github.com/borudeyash1"
-#define MyAppExeName "Saarthi.vbs"
+#ifndef MyAppName
+  #define MyAppName "Sartthi"
+#endif
+
+#ifndef MyAppVersion
+  #define MyAppVersion "1.0.0"
+#endif
+
+#ifndef MyAppPublisher
+  #define MyAppPublisher "Yash Borude"
+#endif
+
+#ifndef MyAppURL
+  #define MyAppURL "https://github.com/borudeyash1"
+#endif
+
+#ifndef MyAppExeName
+  #define MyAppExeName "Saarthi.vbs"
+#endif
 
 [Setup]
 ; App Information
@@ -24,7 +38,7 @@ DisableProgramGroupPage=yes
 
 ; Output
 OutputDir=dist
-OutputBaseFilename=Sartthi-Setup-{#MyAppVersion}-FIXED
+OutputBaseFilename={#MyAppName}-Setup-{#MyAppVersion}
 Compression=lzma
 SolidCompression=yes
 
@@ -65,8 +79,8 @@ Filename: "wscript.exe"; Parameters: """{app}\{#MyAppExeName}"""; Description: "
 procedure InitializeWizard();
 begin
   WizardForm.WelcomeLabel2.Caption := 
-    'This will install Sartthi Project Management Desktop Application on your computer.' + #13#10 + #13#10 +
-    'Sartthi helps you manage projects, tasks, and teams efficiently.' + #13#10 + #13#10 +
+    'This will install {#MyAppName} on your computer.' + #13#10 + #13#10 +
+    '{#MyAppName} helps you manage projects, tasks, and teams efficiently.' + #13#10 + #13#10 +
     'Click Next to continue, or Cancel to exit Setup.';
 end;
 
