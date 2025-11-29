@@ -10,7 +10,7 @@ set "ROOT_DIR=%~dp0"
 pushd "%ROOT_DIR%"
 
 REM Read metadata from saarthi.config.json
-for /f "usebackq tokens=1,* delims==" %%A in (`node -e "const fs=require('fs'); const cfg=JSON.parse(fs.readFileSync('saarthi.config.json','utf8')); if(!cfg.name || !cfg.version){console.error('Config must include name and version'); process.exit(1);} const get=v=>(v ?? '').toString(); console.log('APP_NAME='+get(cfg.name)); console.log('APP_VERSION='+get(cfg.version)); console.log('APP_AUTHOR='+get(cfg.author || cfg.name)); const frontend=(cfg.frontend||{}); console.log('APP_URL='+get(frontend.deployedUrl || '')); console.log('APP_PROJECT_DIR='+get(frontend.dir || 'Project/Project-Management'));"`) do set "%%A=%%B"
+for /f "usebackq tokens=1,* delims==" %%A in (`node read-config.cjs`) do set "%%A=%%B"
 
 if not defined APP_NAME (
     echo [ERROR] Could not load APP_NAME from saarthi.config.json

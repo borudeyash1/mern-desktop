@@ -1,0 +1,47 @@
+# How to Install Saarthi Desktop
+
+## Quick Install (Recommended)
+
+### Step 1: Trust Saarthi Certificate (One-time only)
+
+1. Find the file: **`saarthi-public-cert.cer`**
+2. **Right-click** on it
+3. Click **"Install Certificate"**
+4. Choose **"Local Machine"** 
+5. Click **"Yes"** when Windows asks for permission
+6. Select **"Place all certificates in the following store"**
+7. Click **"Browse"**
+8. Choose **"Trusted Root Certification Authorities"**
+9. Click **"Next"** then **"Finish"**
+
+### Step 2: Install Saarthi
+
+1. Double-click **`saarthi-Setup-1.0.2.exe`**
+2. Click **"Next"** → **"Next"** → **"Install"**
+3. Done! Launch from Desktop or Start Menu
+
+---
+
+## Alternative: Skip Certificate (Shows Warning)
+
+If you don't want to install the certificate:
+
+1. Double-click **`saarthi-Setup-1.0.2.exe`**
+2. Windows shows: "Windows protected your PC"
+3. Click **"More info"**
+4. Click **"Run anyway"**
+5. Continue with installation
+
+---
+
+## Uninstall
+
+1. Go to **Settings** → **Apps**
+2. Find **"Saarthi"**
+3. Click **"Uninstall"**
+
+---
+
+## Need Help?
+
+Contact: support@sartthi.com

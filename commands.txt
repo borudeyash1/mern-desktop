@@ -1,3 +1,15 @@
-node .\bin\mernpkg.js build --config .\saarthi.config.json --platforms windows --arch x64 --ci-mode  
-
+# Standard Build Process
+node .\bin\mernpkg.js build --config .\saarthi.config.json --platforms windows --arch x64 --ci-mode
+node electron-session-fix.patch.cjs
+powershell -ExecutionPolicy Bypass -File fix-console-window.ps1
 .\create-exe-installer.bat
+
+# First Time Setup (FREE Code Signing)
+# Run this once to set up free code signing:
+.\setup-free-signing.bat
+
+# Distribution Package
+# Give users these 3 files:
+# 1. dist\saarthi-Setup-1.0.2.exe
+# 2. saarthi-public-cert.cer
+# 3. INSTALL_INSTRUCTIONS.txt
